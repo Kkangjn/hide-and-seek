@@ -1,0 +1,146 @@
+<html style="overflow: hidden">
+	<head>
+		<style type="text/css">
+			hr {
+				color: #fff;
+				margin: 10px 7px;
+			}
+
+			.widget-wrapper {
+				margin-top: 200px;
+			}
+
+			.widget-quiz {
+				font-family: sans-serif, Arial;
+				border-radius: 8px;
+				background-color: #fff;
+				border: 3px solid #6758ff;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: left;
+				max-height: 400px;
+				height: 100%;
+			}
+
+			#timer {
+				width: calc(100% - 20px);
+				height: 15;
+				padding: 7px 10px;
+				color: red;
+			}
+
+			.question {
+				width: 80%;
+				float: center;
+				font-size: 14pt;
+				font-weight: bold;
+				margin-top: 5px;
+			}
+
+			.answer-wrapper {
+				height: 27px;
+				margin: 0 13px;
+			}
+
+			.select {
+				width: 10%;
+				float: left;
+			}
+			.answer {
+				width: 90%;
+				float: right;
+				color: #fff;
+				font-size: 12pt;
+				font-weight: bold;
+				background-color: #6758ff;
+			}
+
+			.button {
+				float: center;
+			}
+
+		</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+    <body>
+        <script type="text/javascript">
+            let questions = [];
+            let questionId = [];
+          window.addEventListener("message", function (e) {
+            document.getElementById("question").innerText = "문제 목록";
+            
+            // Display question and choices
+            questions = e.data.questions;
+            questionId = e.data.questionId;
+            var answerWrapper = document.getElementById("answer-wrapper");
+            answerWrapper.innerHTML = ""; // Clear previous choices
+      
+            for (var i = 0; i < questions.length; i++) {
+              var div = document.createElement("div");
+              div.className = "answer-wrapper";
+      
+              var input = document.createElement("input");
+              input.type = "checkbox";
+              input.id = "select" + (i + 1);
+      
+              var label = document.createElement("label");
+              label.className = "select";
+              label.htmlFor = "select" + (i + 1);
+
+              var answer = document.createElement("div");
+              answer.className = "answer";
+              answer.id = "answer" + (i + 1);
+              answer.innerText = i+1 + ")   " + questions[i];
+      
+              div.appendChild(input);
+              div.appendChild(label);
+              div.appendChild(answer);
+              answerWrapper.appendChild(div);
+            }
+          });
+
+		  function submitAnswer() {
+			// Handle submitted answers here
+			var selectQuestions = [];
+            var selectQuestionId = [];
+	  
+			// Retrieve selected answers
+			for (var i = 0; i < questions.length; i++) {
+			  var answerCheckbox = document.getElementById("select" + (i+1));
+			  if (answerCheckbox.checked) {
+				selectQuestions.push(questions[i]);
+                selectQuestionId.push(questionId[i]);
+			  }
+			}
+
+            if(selectQuestionId.length != 5){
+                alert("문제는 5개를 골라주세요");
+                return;
+            }
+
+			window.parent.postMessage({
+                    type : "save",
+                    selectQuestions : selectQuestions,
+                    selectQuestionId : selectQuestionId,
+                }, '*')
+		  }
+
+		  function cancelAnswer(){
+            window.parent.postMessage({
+                    type : "close",
+                }, '*')
+        }
+      
+        </script>
+      
+        <div class="widget-wrapper">
+          <div class="widget-quiz" style="overflow-y: scroll">
+            <div class="question" id="question">-</div>
+            <hr />
+            <div id="answer-wrapper"></div>
+            <button class="button" onclick="submitAnswer()">제출</button>
+            <button class="button" onclick="cancelAnswer()">취소</button>
+          </div>
+        </div>
+      </body>
+      </html>

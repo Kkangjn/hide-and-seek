@@ -1,0 +1,137 @@
+<html style="overflow: hidden">
+	<head>
+		<style type="text/css">
+			hr {
+				color: #fff;
+				margin: 10px 7px;
+			}
+
+			.widget-wrapper {
+				margin-top: 200px;
+			}
+
+			.widget-quiz {
+				font-family: sans-serif, Arial;
+				border-radius: 8px;
+				background-color: #fff;
+				border: 3px solid #6758ff;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: left;
+				max-height: 400px;
+				height: 100%;
+			}
+
+			#timer {
+				width: calc(100% - 20px);
+				height: 15;
+				padding: 7px 10px;
+				color: red;
+			}
+
+			.question {
+				width: 80%;
+				float: center;
+				font-size: 14pt;
+				font-weight: bold;
+				margin-top: 5px;
+			}
+
+			.answer-wrapper {
+				height: 27px;
+				margin: 0 13px;
+			}
+
+			.select {
+				width: 10%;
+				float: left;
+			}
+			.answer {
+				width: 90%;
+				float: right;
+				color: #fff;
+				font-size: 12pt;
+				font-weight: bold;
+				background-color: #6758ff;
+			}
+
+			.button {
+				float: center;
+			}
+
+		</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<script type="text/javascript">
+
+		  window.addEventListener("message", function (e) {
+			document.getElementById("question").innerText = "Q. " + e.data.quiz.question;
+	  
+			// Display question and choices
+			for (var i = 0; i < e.data.quiz.choices.length; i++) {
+			  var selectElement = document.getElementById("select" + (i + 1));
+			  var answerElement = document.getElementById("answer" + (i + 1));
+			  selectElement.innerText = (i + 1) + ") ";
+			  answerElement.innerText = i+1+")   " + e.data.quiz.choices[i];
+			}
+		  });
+		  	  
+		  function submitAnswer() {
+			// Handle submitted answers here
+			var selectedAnswer = 0;
+	  
+			// Retrieve selected answers
+			for (var i = 1; i <= 4; i++) {
+			  var answerCheckbox = document.getElementById("select" + i);
+			  if (answerCheckbox.checked) {
+				selectedAnswer += i;
+				alert("선택한 정답: " + i);
+			  }
+			  break;
+			}
+
+			window.parent.postMessage({
+                    type : "submit",
+                    selectedAnswer : selectedAnswer,
+                }, '*')
+
+		  }
+
+		  function cancelAnswer(){
+            window.parent.postMessage({
+                    type : "close",
+                }, '*')
+        }
+
+		</script>
+		<div class="widget-wrapper">
+		  <div class="widget-quiz">
+			<div class="question" id="question">-</div>
+			<hr />
+			<div class="answer-wrapper">
+			  <input type="checkbox" id="select1">
+			  <label class="select" for="select1"> </label>
+			  <div class="answer" id="answer1"></div>
+			</div>
+			<div class="answer-wrapper">
+			  <input type="checkbox" id="select2">
+			  <label class="select" for="select2"> </label>
+			  <div class="answer" id="answer2"></div>
+			</div>
+			<div class="answer-wrapper">
+			  <input type="checkbox" id="select3">
+			  <label class="select" for="select3"> </label>
+			  <div class="answer" id="answer3"></div>
+			</div>
+			<div class="answer-wrapper">
+			  <input type="checkbox" id="select4">
+			  <label class="select" for="select4"> </label>
+			  <div class="answer" id="answer4"></div>
+			</div>
+			<button class="button" onclick="submitAnswer()">제출</button>
+			<button class="button" onclick="cancelAnswer()">취소</button>
+		  </div>
+		</div>
+	  </body>
+	  </html>

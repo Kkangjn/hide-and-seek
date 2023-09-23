@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    /* Add your custom styles here */
+
+    /* Example style for user cards */
+    .user-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+    }
+
+    /* Example style for questions */
+    .question-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with menu -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Admin Panel</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Problems</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Results</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- User Management -->
+  <section>
+    <h2>User Management</h2>
+    <div class="user-card">
+      <div>User 1</div>
+      <button>Edit</button>
+      <button>Delete</button>
+    </div>
+    <div class="user-card">
+      <div>User 2</div>
+      <button>Edit</button>
+      <button>Delete</button>
+    </div>
+  </section>
+
+  <!-- Problem Management -->
+  <section>
+    <h2>Problem Management</h2>
+    <div class="question-card">
+      <div>
+        <strong>Question 1:</strong> Sample question content here.
+      </div>
+      <button>Edit</button>
+      <button>Delete</button>
+    </div>
+    <div class="question-card">
+      <div>
+        <strong>Question 2:</strong> Sample question content here.
+      </div>
+      <button>Edit</button>
+      <button>Delete</button>
+    </div>
+  </section>
+
+  <!-- Result Management -->
+  <section>
+    <h2>Result Management</h2>
+    <div class="result-card">
+      <div>
+        Game 1 - Started on: 2023-09-20 12:00:00
+      </div>
+      <div>
+        User 1: 3 correct answers
+      </div>
+      <button>Show Details</button>
+    </div>
+    <div class="result-card">
+      <div>
+        Game 2 - Started on: 2023-09-21 15:00:00
+      </div>
+      <div>
+        User 2: 2 correct answers
+      </div>
+      <button>Show Details</button>
+    </div>
+  </section>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

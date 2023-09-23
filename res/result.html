@@ -1,0 +1,224 @@
+<html style="overflow: hidden">
+	<head>
+		<style type="text/css">
+			hr {
+				color: #fff;
+				margin: 10px 7px;
+			}
+
+			.widget-wrapper {
+				margin-top: 200px;
+			}
+
+			.widget-quiz {
+				font-family: sans-serif, Arial;
+				border-radius: 8px;
+				background-color: #fff;
+				border: 3px solid #6758ff;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: left;
+				max-height: 400px;
+				height: 100%;
+			}
+
+			#timer {
+				width: calc(100% - 20px);
+				height: 15;
+				padding: 7px 10px;
+				color: red;
+			}
+
+			.question {
+				width: 80%;
+				float: center;
+				font-size: 14pt;
+				font-weight: bold;
+				margin-top: 5px;
+			}
+
+			.answer-wrapper {
+				height: 27px;
+				margin: 0 13px;
+			}
+
+			.select {
+				width: 10%;
+				float: left;
+			}
+			.answer {
+				width: 90%;
+				float: right;
+				color: #fff;
+				font-size: 12pt;
+				font-weight: bold;
+				background-color: #6758ff;
+			}
+
+			.button {
+				float: center;
+			}
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 10px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+
+		</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+    <body>
+        <script type="text/javascript">
+            var redTeamName = [];
+            var redTeamCorrect = [];
+            var redTeamCatch = [];
+            var blueTeamName = [];
+            var blueTeamCorrect = [];
+            var blueTeamAlive = [];
+    
+            window.addEventListener("message", function (e) {
+                redTeamName = e.data.redTeamName;
+                redTeamCorrect = e.data.redTeamCorrect;
+                redTeamCatch = e.data.redTeamCatch;
+                blueTeamName = e.data.blueTeamName;
+                blueTeamCorrect = e.data.blueTeamCorrect;
+                blueTeamAlive = e.data.blueTeamAlive;
+    
+
+                const redTeamWrapper = document.getElementById("redTeam-wrapper");
+                redTeamWrapper.innerHTML = ""; // Clear previous content
+    
+                const redTeamTable = document.createElement("table");
+                const redTeamHeaderRow = document.createElement("tr");
+                const redTeamHeaders = ["플레이어 이름", "맞힌 정답 수", "잡은 인원 수"];
+    
+                // Create header cells
+                for (const headerText of redTeamHeaders) {
+                    const headerCell = document.createElement("th");
+                    headerCell.appendChild(document.createTextNode(headerText));
+                    redTeamHeaderRow.appendChild(headerCell);
+                }
+                redTeamTable.appendChild(headerRow);
+    
+                // Add player rows
+                for (var i=0; i<redTeam.length; i++) {
+                    const row = document.createElement("tr");
+    
+                    const playerNameCell = document.createElement("td");
+                    playerNameCell.appendChild(document.createTextNode(redTeamName[i]));
+                    row.appendChild(playerNameCell);
+    
+                    const correctAnswersCell = document.createElement("td");
+                    correctAnswersCell.appendChild(document.createTextNode(redTeamCorrect[i]));
+                    row.appendChild(correctAnswersCell);
+    
+
+                    const capturedCell = document.createElement("td");
+                    capturedCell.appendChild(document.createTextNode(redTeamCatch[i]));
+                    row.appendChild(capturedCell);
+    
+                    redTeamTable.appendChild(row);
+                }
+                redTeamWrapper.appendChild(redTeamTable);
+
+                const blueTeamWrapper = document.getElementById(redTeam-wrapper);
+                blueTeamWrapper.innerHTML = ""; // Clear previous content
+    
+                const blueTeamTable = document.createElement("table");
+                const blueTeamHeaderRow = document.createElement("tr");
+                const blueTeamHeaders = ["플레이어 이름", "맞힌 정답 수", "잡은 인원 수"];
+    
+                // Create header cells
+                for (const headerText of blueTeamHeaders) {
+                    const headerCell = document.createElement("th");
+                    headerCell.appendChild(document.createTextNode(headerText));
+                    blueTeamHeaderRow.appendChild(headerCell);
+                }
+                blueTeamTable.appendChild(headerRow);
+    
+                // Add player rows
+                for (var i=0; i<redTeam.length; i++) {
+                    const row = document.createElement("tr");
+    
+                    const playerNameCell = document.createElement("td");
+                    playerNameCell.appendChild(document.createTextNode(blueTeamName[i]));
+                    row.appendChild(playerNameCell);
+    
+                    const correctAnswersCell = document.createElement("td");
+                    correctAnswersCell.appendChild(document.createTextNode(blueTeamCorrect[i]));
+                    row.appendChild(correctAnswersCell);
+    
+                    const capturedCell = document.createElement("td");
+                    capturedCell.appendChild(document.createTextNode(blueTeamAlive[i] ? "Yes" : "No"));
+                    row.appendChild(capturedCell);
+
+    
+                    blueTeamTable.appendChild(row);
+                }
+                blueTeamWrapper.appendChild(blueTeamTable);
+            });
+    
+            function displayTeam(teamName, players, wrapperId) {
+                const wrapper = document.getElementById(wrapperId);
+                wrapper.innerHTML = ""; // Clear previous content
+    
+                const table = document.createElement("table");
+                const headerRow = document.createElement("tr");
+                const headers = ["플레이어 이름", "맞힌 정답 수", "잡은 인원 수"];
+    
+                // Create header cells
+                for (const headerText of headers) {
+                    const headerCell = document.createElement("th");
+                    headerCell.appendChild(document.createTextNode(headerText));
+                    headerRow.appendChild(headerCell);
+                }
+                table.appendChild(headerRow);
+    
+                // Add player rows
+                for (const player of players) {
+                    const row = document.createElement("tr");
+    
+                    const playerNameCell = document.createElement("td");
+                    playerNameCell.appendChild(document.createTextNode(player.name));
+                    row.appendChild(playerNameCell);
+    
+                    const correctAnswersCell = document.createElement("td");
+                    correctAnswersCell.appendChild(document.createTextNode(player.correctAnswers));
+                    row.appendChild(correctAnswersCell);
+    
+                    if (showSurvivalStatus) {
+                        const capturedCell = document.createElement("td");
+                        capturedCell.appendChild(document.createTextNode(player.isCaptured ? "Yes" : "No"));
+                        row.appendChild(capturedCell);
+                    }
+    
+                    table.appendChild(row);
+                }
+    
+                wrapper.appendChild(table);
+            }
+        </script>
+    
+        <div class="widget-wrapper">
+            <div class="widget-quiz" style="overflow-y: scroll">
+                <div class="question" id="redTeam">-</div>
+                <hr />
+                <div id="redTeam-wrapper"></div>
+            </div>
+            <div class="widget-quiz" style="overflow-y: scroll">
+                <div class="question" id="blueTeam">-</div>
+                <hr />
+                <div id="blueTeam-wrapper"></div>
+            </div>
+        </div>
+    </body>
+    </html>

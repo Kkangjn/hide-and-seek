@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html style="overflow: hidden">
+	<head>
+		<style type="text/css">
+			hr {
+				color: #fff;
+				margin: 10px 7px;
+			}
+
+			.widget-wrapper {
+				margin-top: 200px;
+			}
+
+			.widget-quiz {
+				font-family: sans-serif, Arial;
+				border-radius: 8px;
+				background-color: #fff;
+				border: 3px solid #6758ff;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+				/* max-height: 400px; */
+				height: 100%;
+			}
+
+			#timer {
+				width: calc(100% - 20px);
+				height: 15;
+				padding: 7px 10px;
+				color: red;
+			}
+
+			.answer-wrapper {
+				height: 27px;
+				margin: 0 13px;
+			}
+
+			.select {
+				width: 10%;
+				float: left;
+                font-size: 12pt;
+			}
+
+			.answer {
+				width: 70%;
+				float: center;
+				color: #fff;
+				font-size: 12pt;
+				font-weight: bold;
+				background-color: #7669ff;
+			}
+		</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+    <body>
+    <!-- Your HTML content here -->
+    <div class="widget-wrapper">
+        <div class="widget-quiz">
+            <div class="question">
+                <label for="question">문제 입력:</label>
+                <input type="text" id="question" placeholder="문제 입력"><br>
+                <hr />
+                <div class="answer-wrapper">
+                    <label class="select" for="choice1">보기 1:</label>
+                    <input class="answer" type="text" id="choice1" placeholder="보기 1"><br>
+                </div>
+                <div class="answer-wrapper">
+                    <label class="select" for="choice2">보기 2:</label>
+                    <input class="answer" type="text" id="choice2" placeholder="보기 2"><br>
+                </div>
+                <div class="answer-wrapper">
+                    <label class="select" for="choice3">보기 3:</label>
+                    <input class="answer" type="text" id="choice3" placeholder="보기 3"><br>
+                </div>
+                <div class="answer-wrapper">
+                    <label class="select" for="choice4">보기 4:</label>
+                    <input class="answer"type="text" id="choice4" placeholder="보기 4"><br>
+                </div>
+                <div class="answer-wrapper">
+                    <label class="select" for="correctAnswer">정답:</label>
+                    <input class="answer" type="number" id="correctAnswer" min="1" max="4" placeholder="정답 번호">
+                </div>
+                <button onclick="saveQuestion()">저장</button>
+                <button onclick="cancelQuestion()">취소</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script type="text/javascript">
+        function saveQuestion() {
+        const question = document.getElementById('question').value;
+        const choices = [
+            document.getElementById('choice1').value,
+            document.getElementById('choice2').value,
+            document.getElementById('choice3').value,
+            document.getElementById('choice4').value
+        ];
+        const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
+
+        if (isNaN(correctAnswer) || correctAnswer < 1 || correctAnswer > 4) {
+            alert('정답 번호는 1에서 4 사이의 숫자여야 합니다.');
+            return;
+        }
+
+        const questionData = {
+            question: question,
+            choices: choices,
+            correctAnswer: correctAnswer
+        };
+
+        window.parent.postMessage({
+                    type : "save",
+                    questionData : questionData,
+                }, '*')
+
+        // You can save the questionData in your preferred way (e.g., send to server)
+        console.log(questionData);
+        alert('문제가 저장되었습니다.');
+        }
+
+        function cancelQuestion(){
+            window.parent.postMessage({
+                    type : "close",
+                }, '*')
+        }
+    </script>
+    </body>
+</html>
